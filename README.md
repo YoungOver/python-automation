@@ -1,20 +1,22 @@
 # python-automation
 
-Bots, scrapers and spreadsheet automation for small businesses. Each folder is a self-contained tool for a common request: bookings, price monitoring, reporting.
+Боты, парсеры и автоматизация таблиц для малого бизнеса. Каждая папка отдельный инструмент
+под частую задачу: запись клиентов, мониторинг цен, отчётность.
 
-| Booking bot | Catalog parser |
+| Бот для записи | Парсер каталога |
 |---|---|
 | ![](docs/bot_1440_0.jpg) | ![](docs/parser_1440_0.jpg) |
-| **AI assistant over a knowledge base** | **Telegram Mini App** |
+| **AI-ассистент по базе знаний** | **Telegram Mini App** |
 | ![](docs/aibot_chat.jpg) | ![](docs/app_phones.jpg) |
 
 ## booking_bot
 
-Telegram bot for salons and clinics. The client picks a service, a day and a free slot, leaves a phone number; the admin gets the request with Approve / Decline buttons.
+Telegram-бот для салонов и клиник. Клиент выбирает услугу, день и свободное время,
+оставляет телефон, администратор получает заявку с кнопками «Подтвердить» и «Отклонить».
 
-- aiogram 3, finite-state machine for the dialog
-- SQLite storage, busy slots are hidden automatically so double booking is impossible
-- the admin confirms or declines with one tap, the client gets the answer right away
+- aiogram 3, конечный автомат для диалога
+- хранение в SQLite, занятые слоты скрываются автоматически, двойная запись невозможна
+- администратор подтверждает или отклоняет одним нажатием, клиент сразу получает ответ
 
 ```bash
 pip install -r requirements.txt
@@ -23,11 +25,12 @@ BOT_TOKEN=... ADMIN_ID=... python booking_bot/bot.py
 
 ## catalog_parser
 
-Async scraper that walks a paginated catalog, normalises prices and ratings and builds an Excel report with a summary sheet and per-category tabs.
+Асинхронный парсер, который обходит каталог по страницам, нормализует цены и рейтинги и
+собирает отчёт в Excel со сводным листом и вкладками по категориям.
 
-- httpx with a connection pool and retries, BeautifulSoup parsing
-- concurrency limited by a semaphore to stay polite to the target site
-- openpyxl report with formatting and an HTML dashboard (`make_report.py`)
+- httpx с пулом соединений и повторами, разбор через BeautifulSoup
+- параллельность ограничена семафором, чтобы не перегружать сайт
+- отчёт в openpyxl с форматированием и HTML-дашборд (`make_report.py`)
 
 ```bash
 python catalog_parser/parser.py --pages 50 --out books.xlsx
@@ -35,6 +38,7 @@ python catalog_parser/parser.py --pages 50 --out books.xlsx
 
 ## sheets_automation
 
-Google Sheets sales tracker: formulas, conditional formatting, a weekly summary and Telegram notifications on new deals.
+Учёт продаж в Google Sheets: формулы, условное форматирование, недельная сводка и
+уведомления в Telegram о новых сделках.
 
 ![](docs/sheets.jpg)
